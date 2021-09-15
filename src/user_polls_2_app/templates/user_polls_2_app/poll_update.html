@@ -1,0 +1,55 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3 mx-5">
+            <div class="">
+                <form action="" method="post" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="reset">Reset</button>
+                    <button type="submit">Update</button>
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{{ object.get_absolute_url }}/delete">
+                                <button type="button">Delete this Poll</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{{ object.get_absolute_url }}/questions/create/">
+                                <button type="button">Add question</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{{ object.get_absolute_url }}">
+                                <button type="button">Back to poll overview</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

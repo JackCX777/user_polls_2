@@ -1,0 +1,53 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Question Create
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <h2>New question for {{ parent_poll.name }}</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3 mx-5">
+            <div class="">
+                <form action="" method="post" >
+                    {% csrf_token %}
+                    {{ poll_question_form.as_p }}
+                    <button type="reset">Reset</button>
+                    <button type="submit">Create</button>
+
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <h4>Add answer variants:</h4>
+                        </div>
+                    </div>
+                </div>
+                    {{ poll_answer_form.as_ul }}
+
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{% url 'poll_update' pk=pk %}">
+                                <button type="button">Back to edit poll</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

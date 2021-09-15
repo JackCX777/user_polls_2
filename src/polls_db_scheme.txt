@@ -1,0 +1,72 @@
+Poll
+	name
+	date_start
+	date_finish
+	Description
+	is_active - bool
+
+
+Question
+	poll - FK - Poll
+	text
+	type
+
+
+Answer
+	question - FK -Question
+	text nul=true
+
+
+
+user_answer
+	user - FK - User - null=True
+	anonimus - Int - null=True
+	answer - FK - Answer
+	text = null=false
+
+
+UserPoll
+	user = FK - User
+	poll = FK - Poll
+	is_active - bool
+
+
+
+CustomUser
+Name = ahfhds
+Email = null
+password = dfsdfdshvdshuv
+
+
+JWT = id - 5
+
+????
+ 1
+ 2 - v
+ 3
+
+????
+1
+2 - v
+3 - v
+
+???
+1 - djsbfdhsbf
+
+
+
+
+Question
+	How are you?
+
+Answer
+	1
+	ok
+
+Answer
+	2
+	bad
+
+Answer
+	3
+	———-

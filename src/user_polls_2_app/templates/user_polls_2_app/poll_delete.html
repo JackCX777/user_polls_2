@@ -1,0 +1,34 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Delete poll
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3 mx-5">
+            <div class="">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <p>
+                        Do you really want to delete {{ object.name }} Poll?
+                    </p>
+                    <button type="submit">Yes</button>
+                    <a href="{{ object.get_absolute_url }}/update">
+                        <button type="button">No</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

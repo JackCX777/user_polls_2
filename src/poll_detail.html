@@ -1,0 +1,96 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+
+{% if poll_questions_list %}
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            Poll name: {{ poll.name }}
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            Date start: {{ poll.date_start }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            Date finish: {{ poll.date_finish }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            Poll description: {{ poll.description }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            Is active: {{ poll.is_active }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h4 class="text-center my-3">
+            Poll questions:
+        </h4>
+    </div>
+</div>
+{% for question in poll_questions_list %}
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <a href="{{ object.get_absolute_url }}/delete">
+                    {{ question.text }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <a href="{{ object_list.poll.get_absolute_url }}/update">
+                <button type="button">Edit Poll</button>
+            </a>
+        </div>
+    </div>
+</div>>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <a href="{% url 'polls_list' %}">
+                <button type="button">Back to all Polls</button>
+            </a>
+        </div>
+    </div>
+</div>>
+
+{% else %}
+
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            No Poll info
+        </h2>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

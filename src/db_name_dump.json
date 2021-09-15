@@ -1,0 +1,109 @@
+[
+{
+    "model": "sessions.session",
+    "pk": "rapulfsoe0kdsj4fxi518wjb331sja8f",
+    "fields": {
+        "session_data": "NmRlOWYyZGNlNmJmMTc5ZjBjYWIwYmEyY2YyMjM0NTEwNWJmZTEyZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIwMGU1ZDg4ZjE1ZDU1YzBkYWEyOGU2MjdlNjE2Njk3MDBjNGMwNGE5In0=",
+        "expire_date": "2021-08-29T15:34:20.403Z"
+    }
+},
+{
+    "model": "user_polls_2_app.poll",
+    "pk": 1,
+    "fields": {
+        "name": "First poll",
+        "description": "",
+        "date_start": "2021-08-15",
+        "date_finish": null,
+        "is_active": true
+    }
+},
+{
+    "model": "custom_user_app.user",
+    "fields": {
+        "password": "pbkdf2_sha256$150000$UtvdlwE3czWa$9ktAPGKfaCtYz7wmdc3EQB9urog+kSd8wbsoJql2LkM=",
+        "last_login": "2021-08-15T15:34:20.400Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-08-15T15:33:55.515Z",
+        "email": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2021-08-15T15:40:32.043Z",
+        "user": [
+            ""
+        ],
+        "content_type": [
+            "user_polls_2_app",
+            "poll"
+        ],
+        "object_id": "1",
+        "object_repr": "Poll object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2021-08-15T17:31:35.328Z",
+        "user": [
+            ""
+        ],
+        "content_type": [
+            "user_polls_2_app",
+            "pollsassignedtousers"
+        ],
+        "object_id": "1",
+        "object_repr": "PollsAssignedToUsers object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2021-08-15T17:36:52.728Z",
+        "user": [
+            ""
+        ],
+        "content_type": [
+            "user_polls_2_app",
+            "pollsassignedtousers"
+        ],
+        "object_id": "1",
+        "object_repr": "First poll admin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"user\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2021-08-15T17:39:05.474Z",
+        "user": [
+            ""
+        ],
+        "content_type": [
+            "user_polls_2_app",
+            "pollsassignedtousers"
+        ],
+        "object_id": "1",
+        "object_repr": "First poll assigned to admin",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]

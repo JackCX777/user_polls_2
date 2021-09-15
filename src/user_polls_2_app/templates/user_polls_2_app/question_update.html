@@ -1,0 +1,93 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Question Update
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <h2>Question: {{ question_object.text }}</h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3 mx-5">
+            <div class="">
+
+                <form action="" method="post" >
+
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center my-3">
+                                {{ poll_question_form.as_p }}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="text-center my-3">
+                                <h4>Edit answer options:</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        {{ poll_answer_formset.management_form }}
+
+                        {% for answer_form in poll_answer_formset %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="text-center my-3">
+                                    <div class="link-formset">
+                                        {{ answer_form.text }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <button type="reset">Reset</button>
+                    <button type="submit">Update</button>
+                </form>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{{ question_object.get_absolute_url }}">
+                                <button type="button">Back to question overview</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include formset plugin - including jQuery dependency -->
+
+<!--&lt;!&ndash;-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<!--&ndash;&gt;-->
+
+<script src="{% static 'base_dir_static/js/modified_jquery.formset.js' %}"></script>
+<script>
+    $('.link-formset').formset({
+        addText: '+',
+        deleteText: '-'
+    });
+</script>
+
+{% endblock %}

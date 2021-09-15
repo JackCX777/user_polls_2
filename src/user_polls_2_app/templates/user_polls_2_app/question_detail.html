@@ -1,0 +1,84 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Question Detail
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            Question: {{ object.text }}
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            Answer options:
+        </h2>
+    </div>
+</div>
+
+{% if answer_variants %}
+
+{% for variant in answer_variants %}
+
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <p>
+                    {{ variant.text }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="row">
+    <div class="col">
+        <p class="text-center my-3">
+            No answer options for this question
+        </p>
+    </div>
+</div>
+
+{% endif %}
+
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <a href="{{ object.get_absolute_url }}/update">
+                <button type="button">Edit question</button>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <a href="{{ object.get_absolute_url }}/delete">
+                <button type="button">Delete question</button>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3">
+            <a href="{{ poll_object.get_absolute_url }}">
+                <button type="button">Back to poll overview</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

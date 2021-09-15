@@ -1,0 +1,42 @@
+{% extends 'user_polls_2_app/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col">
+        <h2 class="text-center my-3">
+            New poll:
+        </h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="text-center my-3 mx-5">
+            <div class="">
+                <form action="" method="post" >
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="reset">Reset</button>
+                    <button type="submit">Create</button>
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <div class="text-center my-3">
+                            <a href="{% url 'polls_list' %}">
+                                <button type="button">Back to all polls</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
