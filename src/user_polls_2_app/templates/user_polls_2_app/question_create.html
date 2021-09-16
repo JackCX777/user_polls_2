@@ -3,23 +3,17 @@
 {% load static %}
 
 {% block title %}
-  Question Create
+   Create question
 {% endblock %}
+
+{% block page_name %}Edit question "{{ poll_object.name }}"{% endblock page_name %}
 
 {% block content %}
 
 <div class="row">
     <div class="col">
-        <div class="text-center my-3">
-            <h2>New question for {{ parent_poll.name }}</h2>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
         <div class="text-center my-3 mx-5">
             <div class="">
-
                 <form action="" method="post" >
 
                     {% csrf_token %}
@@ -27,7 +21,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="text-center my-3">
-                                {{ poll_question_form.as_p }}
+                                {{ question_form.as_p }}
                             </div>
                         </div>
                     </div>
@@ -41,25 +35,23 @@
                         </div>
                     </div>
                     <div>
-                        {{ poll_answer_formset.management_form }}
-
-                        {% for answer_form in poll_answer_formset %}
-                        <div class="row">
-                            <div class="col">
-                                <div class="text-center my-3">
-                                    <div class="link-formset">
-                                        {{ answer_form.text }}
+                        {{ answer_formset.management_form }}
+                        {% for answer_form in answer_formset %}
+                            {{ answer_form.id }}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-center my-3">
+                                        <div class="answer-formset">
+                                            {{ answer_form.text }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         {% endfor %}
-
                     </div>
                     <button type="reset">Reset</button>
                     <button type="submit">Create</button>
                 </form>
-
                 <div class="row">
                     <div class="col">
                         <div class="text-center my-3">
@@ -83,8 +75,10 @@
 <!--&ndash;&gt;-->
 
 <script src="{% static 'base_dir_static/js/modified_jquery.formset.js' %}"></script>
+
 <script>
-    $('.link-formset').formset({
+    $('.answer-formset').formset({
+        prefix: '{{ answer_formset.prefix }}',
         addText: '+',
         deleteText: '-'
     });

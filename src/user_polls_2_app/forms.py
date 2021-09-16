@@ -9,7 +9,7 @@ class PollModelForm(forms.ModelForm):
 
 
 class QuestionModelForm(forms.ModelForm):
-    prefix = 'poll_question'
+    # prefix = 'poll_question'
 
     class Meta:
         model = PollQuestion
@@ -18,7 +18,7 @@ class QuestionModelForm(forms.ModelForm):
 
 
 class PollAnswerModelForm(forms.ModelForm):
-    prefix = 'poll_answer'
+    # prefix = 'poll_answer'
 
     class Meta:
         model = PollAnswer

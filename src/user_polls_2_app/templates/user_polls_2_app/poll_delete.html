@@ -6,9 +6,9 @@
   Delete poll
 {% endblock %}
 
+{% block page_name %}Delete poll {{ object.name }}{% endblock page_name %}
+
 {% block content %}
-
-
 
 <div class="row">
     <div class="col">
@@ -17,10 +17,10 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     <p>
-                        Do you really want to delete {{ object.name }} Poll?
+                        Do you really want to delete poll {{ object.name }}?
                     </p>
                     <button type="submit">Yes</button>
-                    <a href="{{ object.get_absolute_url }}/update">
+                    <a href="{% url 'poll_update' object.id %}">
                         <button type="button">No</button>
                     </a>
                 </form>
@@ -28,7 +28,5 @@
         </div>
     </div>
 </div>
-
-
 
 {% endblock %}

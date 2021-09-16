@@ -6,102 +6,100 @@
   Poll Detail
 {% endblock %}
 
+{% block page_name %}Poll overview{% endblock page_name %}
+
 {% block content %}
 
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center my-3">
+                Poll name: {{ object.name }}
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                Date start: {{ object.date_start }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                Date finish: {{ object.date_finish }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                Poll description: {{ object.description }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                Is active: {{ object.is_active }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center my-3">
+                Poll questions:
+            </h2>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col">
-        <h2 class="text-center my-3">
-            Poll name: {{ object.name }}
-        </h2>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            Date start: {{ object.date_start }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            Date finish: {{ object.date_finish }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            Poll description: {{ object.description }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            Is active: {{ object.is_active }}
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <h2 class="text-center my-3">
-            Poll questions:
-        </h2>
-    </div>
-</div>
+    {% if question_list %}
 
-{% if question_list %}
+        <div class="row">
+            <div class="col">
+                <div class="text-center my-3">
+                    <ul>
+                        {% for question in question_list %}
+                        <li>
+                            <a href="{{ question.get_absolute_url }}">
+                                {{ question.text }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="row">
+            <div class="col">
+                <p class="text-center my-3">
+                    No Questions for this Poll
+                </p>
+            </div>
+        </div>
+
+    {% endif %}
 
     <div class="row">
         <div class="col">
             <div class="text-center my-3">
-                <ul>
-                    {% for question in question_list %}
-                    <li>
-                        <a href="{{ question.get_absolute_url }}">
-                            {{ question.text }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
+                <a href="{% url 'poll_update' object.id %}">
+                    <button type="button">Edit Poll</button>
+                </a>
             </div>
         </div>
     </div>
-
-
-
-{% else %}
-
-<div class="row">
-    <div class="col">
-        <p class="text-center my-3">
-            No Questions for this Poll
-        </p>
-    </div>
-</div>
-
-{% endif %}
-
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            <a href="{{ object.get_absolute_url }}/update">
-                <button type="button">Edit Poll</button>
-            </a>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <a href="{% url 'polls_list' %}">
+                    <button type="button">Back to all Polls</button>
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            <a href="{% url 'polls_list' %}">
-                <button type="button">Back to all Polls</button>
-            </a>
-        </div>
-    </div>
-</div>
-
 
 {% endblock %}

@@ -20,8 +20,8 @@
             .material-icons.md-48 { font-size: 24px; }
         </style>
         -->
-
-<!--        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">-->
+        <!-- Custom CSS -->
+<!--        <link rel="stylesheet" type="text/css" href="{% static 'base_dir_static/css/base.css' %}">-->
 
         <title>{% block title %} {% endblock %}</title>
     </head>
@@ -34,8 +34,28 @@
             </header>
         </div>
 
+         <h1>{% block page_name %}{% endblock page_name %}</h1>
+
         {% block content %}
         {% endblock %}
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
 
         {% include 'user_polls_2_app/footer.html' %}
 
