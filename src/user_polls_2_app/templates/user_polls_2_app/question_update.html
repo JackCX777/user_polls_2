@@ -1,91 +1,90 @@
-{% extends 'user_polls_2_app/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
   Question Update
 {% endblock %}
 
-{% block page_name %}Create question for poll "{{ question_object.text }}"{% endblock page_name %}
+{% block page_name %}Edit question {{ question_object.text }}{% endblock page_name %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3 mx-5">
-            <div class="">
-
-                <form action="" method="post" >
-
-                    {% csrf_token %}
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="text-center my-3">
-                                {{ question_form.as_p }}
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="text-center my-3">
-                                <h4>Edit answer options:</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-
+    <div class="row">
+        <div class="col">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="text-center my-3">
+                    {{ question_form | crispy }}
+                </div>
+                <br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <h2 class="text-center my-3">
+                                    Edit answer options:
+                                </h2>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {{ answer_formset.management_form }}
                         {% for answer_form in answer_formset %}
                             {{ answer_form.id }}
-                            <div class="row">
-                                <div class="col">
-                                    <div class="text-center my-3">
-                                        <div class="answer-formset">
+                            <tr class="answer-formset">
+                                <td>
+                                    <div class="mx-auto my-auto">
+                                        <div class="mx-auto my-auto"></div>
+                                        <div class="text-center my-auto">
+                                            {# answer_form.text | as_crispy_field #}
                                             {{ answer_form.text }}
                                         </div>
+                                        <div class="mx-auto my-auto"></div>
                                     </div>
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
                         {% endfor %}
-
-                    </div>
-                    <button type="reset">Reset</button>
-                    <button type="submit">Update</button>
-                </form>
-
+                    </tbody>
+                </table>
                 <div class="row">
                     <div class="col">
-                        <div class="text-center my-3">
-                            <a href="{% url 'question_detail' pk=pk q_id=q_id %}">
-                                <button type="button">Back to question overview</button>
-                            </a>
+                        <div class="text-center my-auto">
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            <button type="submit" class="btn btn-outline-secondary">Update</button>
                         </div>
                     </div>
                 </div>
+            </form>
+       </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <a href="{% url 'question_detail' pk=pk q_id=q_id %}">
+                    <button type="button" class="btn btn-outline-secondary">Back to question overview</button>
+                </a>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Include formset plugin - including jQuery dependency -->
+    <!-- Include formset plugin - including jQuery dependency -->
 
-<!--&lt;!&ndash;-->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<!--&ndash;&gt;-->
+    <!--&lt;!&ndash;-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <!--&ndash;&gt;-->
 
-<script src="{% static 'base_dir_static/js/modified_jquery.formset.js' %}"></script>
+    <script src="{% static 'base_dir_static/js/modified_jquery.formset.js' %}"></script>
 
-<script>
-    $('.answer-formset').formset({
-        prefix: '{{ answer_formset.prefix }}',
-        addText: '+',
-        deleteText: '-'
-    });
-</script>
+    <script>
+        $('.answer-formset').formset({
+            prefix: '{{ answer_formset.prefix }}',
+            addText: '+',
+            deleteText: '-'
+        });
+    </script>
 
 {% endblock %}

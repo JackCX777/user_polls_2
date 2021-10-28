@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Poll results
+{% endblock %}
+
+{% block page_name %}{{ poll }} results:{% endblock page_name %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm">
+            {% for user, results in poll_results.items %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <h3 class="text-center my-3">
+                                    {{ user }}:
+                                </h3>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for question, answers in results.items %}
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <h6 class="text-center my-3">
+                                            {{ question }}:
+                                        </h6>
+                                    </th>
+                                </tr>
+                            </thead>
+                            {% for answer in answers %}
+                                <tr>
+                                    <td>
+                                        <div class="mx-auto my-auto">
+                                            <div class="mx-auto my-auto"></div>
+                                            <div class="text-center my-auto">
+                                                <p>{{ answer }}</p>
+                                            </div>
+                                            <div class="mx-auto my-auto"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3">
+                <a href="">
+                    <button type="button" class="btn btn-outline-secondary">Back to ..</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <div class="hstack gap-3">-->
+<!--                                    <div class="mx-auto my-auto"></div>-->
+<!--                                    <div class="mx-auto my-auto">You have no completed polls</div>-->
+<!--                                    <div class="mx-auto my-auto"></div>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+

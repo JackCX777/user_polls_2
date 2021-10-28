@@ -1,0 +1,72 @@
+<!doctype html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+        <!-- Include file with CSS -->
+        <link rel="stylesheet" href="{% static 'base_dir_static/css/base.css' %}">
+
+        <!-- Page title -->
+        <title>{% block title %} {% endblock %}</title>
+    </head>
+
+    <body>
+
+        <div class="navbarg">
+            <div class="row">
+                {% include 'navbar.html' %}
+            </div>
+        </div>
+
+        <div class="container-sm">
+
+            {% include 'messages.html' %}
+
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm">
+                        <h1 class="text-center">{% block page_name %}{% endblock page_name %}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="hstack gap-3">
+                    <div class="mx-auto"></div>
+                        <div class="vstack gap-2">
+                            <div class="mx-auto"></div>
+                            <div class="mx-auto">{% block content %}{% endblock %}</div>
+                            <div class="mx-auto"></div>
+                        </div>
+                    <div class="mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <div class="hstack gap-3">
+                    <div class="mx-auto"></div>
+                    <div class="mx-auto">{% include 'pagination.html' %}</div>
+                    <div class="mx-auto"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <div class="row">
+                {% include 'footer.html' %}
+            </div>
+        </div>
+        <!-- Include JavaScript; Bootstrap with Popper variant -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    </body>
+</html>

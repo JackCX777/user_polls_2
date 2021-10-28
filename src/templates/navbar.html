@@ -1,0 +1,55 @@
+<div class="row brand">
+    <div class="col-sm">
+        <div class="hstack gap-3">
+            <div class="mx-auto"></div>
+            <a href="{% url 'home' %}">
+                <button type="button" class="btn btn-outline-secondary">POLLS</button>
+            </a>
+            <div class="mx-auto"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+        <div class="hstack gap-3">
+            <button type="button" class="btn btn-outline-secondary">Menu</button>
+            <div class="mx-auto"></div>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div class="hstack gap-3">
+            <div class="mx-auto"></div>
+            <a href="{% url 'polls_assigned_to_user' %}">polls_assigned_to_user</a>
+            <br>
+            <a href="{% url 'completed_polls' %}">completed_polls</a>
+<!--            <input class="form-control mx-auto" type="text" placeholder="Search..">-->
+<!--            <button type="button" class="btn btn-secondary">Search</button>-->
+            <div class="mx-auto"></div>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div class="hstack gap-3">
+            <div class="mx-auto"></div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'user_profile' profile_id=request.user.id %}">
+                <button type="button" class="btn btn-outline-secondary">Profile</button>
+            </a>
+            <div class="vr"></div>
+            <a href="{% url 'user_logout' %}">
+                <button type="button" class="btn btn-outline-secondary">Log out</button>
+            </a>
+            {% else %}
+                <a href="{% url 'user_registration' %}">
+                    <button type="button" class="btn btn-outline-secondary">Registration</button>
+                </a>
+                <div class="vr"></div>
+                <a href="{% url 'user_login' %}">
+                    <button type="button" class="btn btn-outline-secondary">Log in</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

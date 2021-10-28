@@ -1,9 +1,11 @@
 from django.contrib import admin
-from user_polls_2_app.models import Poll, PollQuestion, PollAnswer, UserAnswer, PollsAssignedToUsers
+from user_polls_2_app.models import Poll, PollQuestion, PollAnswer, UserAnswer, PollsAssignedToUser
 
 
 class PollAdmin(admin.ModelAdmin):
     model = Poll
+    list_display = ('id', 'name', 'is_active')
+    list_editable = ('is_active', 'name')
     readonly_fields = ('date_start', )
     fieldsets = (
         (None, {'fields': ('name', 'description', 'date_start', 'date_finish', 'is_active', )}),
@@ -24,17 +26,17 @@ class PollAnswerAdmin(admin.ModelAdmin):
     )
 
 
-class UserAnswerAdmin(admin.ModelAdmin):
-    model = UserAnswer
+class PollsAssignedToUsersAdmin(admin.ModelAdmin):
+    model = PollsAssignedToUser
     fieldsets = (
-        (None, {'fields': ('user', 'anonymous_user_id', 'choice_answer', 'text_answer', )}),
+        (None, {'fields': ('poll', 'user', 'is_active', )}),
     )
 
 
-class PollsAssignedToUsersAdmin(admin.ModelAdmin):
-    model = PollsAssignedToUsers
+class UserAnswerAdmin(admin.ModelAdmin):
+    model = UserAnswer
     fieldsets = (
-        (None, {'fields': ('poll', 'user', 'is_active', )}),
+        (None, {'fields': ('user', 'anonymous_user_id', 'question', 'choice_answer', 'text_answer', )}),
     )
 
 
@@ -42,4 +44,4 @@ admin.site.register(Poll, PollAdmin)
 admin.site.register(PollQuestion, PollQuestionAdmin)
 admin.site.register(PollAnswer, PollAnswerAdmin)
 admin.site.register(UserAnswer, UserAnswerAdmin)
-admin.site.register(PollsAssignedToUsers, PollsAssignedToUsersAdmin)
+admin.site.register(PollsAssignedToUser, PollsAssignedToUsersAdmin)

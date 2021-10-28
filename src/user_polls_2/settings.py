@@ -12,12 +12,14 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 
 import os
-from pathlib import Path
+
+import rest_framework.pagination
 from dotenv import load_dotenv
+from django.contrib.messages import constants as messages
 
 
+# Environment variables
 load_dotenv()
-
 
 DJANGO_SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DB_NAME = os.getenv('DB_NAME')
@@ -34,17 +36,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = DJANGO_SECRET_KEY
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,6 +57,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'rest_framework',
+    'drf_yasg',
     'user_polls_2_app',
     'custom_user_app',
 ]
@@ -87,12 +95,17 @@ TEMPLATES = [
     },
 ]
 
+
+# For django-crispy-forms and crispy-bootstrap5
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
 WSGI_APPLICATION = 'user_polls_2.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
@@ -109,7 +122,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -128,33 +140,59 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
-USE_L10N = True
+# Specify data format
+# USE_L10N = True
+USE_L10N = False
+DATE_FORMAT = 'd.m.Y'
 
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     ('base_dir_static', os.path.join(BASE_DIR, 'base_static')),
 ]
 
-# For django_debug_toolbar
 
+# For django_debug_toolbar
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-# Custom User Model
 
+# Custom User Model
 AUTH_USER_MODEL = 'custom_user_app.User'
+
+
+# Where to redirect after successful log in
+LOGIN_REDIRECT_URL = 'home'
+
+
+# Used when switching to Django 3 from a lower version to avoid warnings in the console
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+# Message constants
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
+
+# Rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 1
+}

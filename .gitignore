@@ -134,3 +134,6 @@ dmypy.json
 
 # Scratch
 scratch00.py
+
+# DB
+.postgresql/

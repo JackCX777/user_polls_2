@@ -1,93 +1,84 @@
-{% extends 'user_polls_2_app/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
   Poll Detail
 {% endblock %}
 
-{% block page_name %}Poll overview{% endblock page_name %}
+{% block page_name %}Poll name: {{ object.name }}{% endblock page_name %}
 
 {% block content %}
 
     <div class="row">
-        <div class="col">
-            <h2 class="text-center my-3">
-                Poll name: {{ object.name }}
-            </h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                Date start: {{ object.date_start }}
+        <div class="col-sm-6">
+            <div class="my-3">
+                Poll description:
+                <textarea class="form-control" id="poll-description" rows="6" cols="50" readonly>{{ object.description }}</textarea>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                Date finish: {{ object.date_finish }}
+        <div class="col-sm-6">
+            <div class="my-3">
+                Active: {% if object.is_active %}Yes{% else %}No{% endif %}
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                Poll description: {{ object.description }}
+            <div class="mb-0">
+                Date start: {% if object.date_start %}{{ object.date_start }}{% else %}--------{% endif %}
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                Is active: {{ object.is_active }}
+            <div class="mb-0">
+                Date finish: {% if object.date_finish %}{{ object.date_finish }}{% else %}--------{% endif %}
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <h2 class="text-center my-3">
-                Poll questions:
-            </h2>
         </div>
     </div>
 
-    {% if question_list %}
-
-        <div class="row">
-            <div class="col">
-                <div class="text-center my-3">
-                    <ul>
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h2 class="text-center my-3">
+                                Poll questions:
+                            </h2>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if question_list %}
                         {% for question in question_list %}
-                        <li>
-                            <a href="{{ question.get_absolute_url }}">
-                                {{ question.text }}
-                            </a>
-                        </li>
+                            <tr>
+                                <td>
+                                    <div class="mx-auto my-auto">
+                                        <div class="mx-auto my-auto"></div>
+                                        <div class="text-center my-auto">
+                                            <a href="{{ question.get_absolute_url }}">{{ question.text }}</a>
+                                        </div>
+                                        <div class="mx-auto my-auto"></div>
+                                    </div>
+                                </td>
+                            </tr>
                         {% endfor %}
-                    </ul>
-                </div>
-            </div>
+                    {% else %}
+                        <tr>
+                            <td>
+                                <div class="hstack gap-3">
+                                    <div class="mx-auto my-auto"></div>
+                                    <div class="mx-auto my-auto">No Questions for this poll</div>
+                                    <div class="mx-auto my-auto"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
-
-    {% else %}
-
-        <div class="row">
-            <div class="col">
-                <p class="text-center my-3">
-                    No Questions for this Poll
-                </p>
-            </div>
-        </div>
-
-    {% endif %}
+    </div>
 
     <div class="row">
         <div class="col">
             <div class="text-center my-3">
                 <a href="{% url 'poll_update' object.id %}">
-                    <button type="button">Edit Poll</button>
+                    <button type="button" class="btn btn-outline-secondary">Edit Poll</button>
                 </a>
             </div>
         </div>
@@ -96,7 +87,7 @@
         <div class="col">
             <div class="text-center my-3">
                 <a href="{% url 'polls_list' %}">
-                    <button type="button">Back to all Polls</button>
+                    <button type="button" class="btn btn-outline-secondary">Back to all Polls</button>
                 </a>
             </div>
         </div>

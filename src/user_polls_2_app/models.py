@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-import uuid
 
 
 class Poll(models.Model):
@@ -34,7 +33,8 @@ class PollQuestion(models.Model):
     text = models.TextField(blank=False)
 
     class Meta:
-        ordering = ('poll',)
+        # ordering = ('poll',)
+        order_with_respect_to = 'poll'
         verbose_name = 'PollQuestion'
         verbose_name_plural = 'PollQuestions'
 
@@ -50,7 +50,8 @@ class PollAnswer(models.Model):
     text = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        ordering = ('question',)
+        # ordering = ('question',)
+        order_with_respect_to = 'question'
         verbose_name = 'PollAnswer'
         verbose_name_plural = 'PollAnswers'
 
@@ -58,26 +59,11 @@ class PollAnswer(models.Model):
         return self.text
 
 
-class UserAnswer(models.Model):
-    User = get_user_model()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    anonymous_user_id = models.UUIDField(unique=True, null=True, blank=True, default=uuid.uuid4)
-    choice_answer = models.ForeignKey(PollAnswer, on_delete=models.CASCADE, null=True, blank=True)
-    text_answer = models.TextField(blank=False)
-
-    class Meta:
-        ordering = ('user_id',)
-        verbose_name = 'UserAnswer'
-        verbose_name_plural = 'UserAnswers'
-
-    def __str__(self):
-        return self.text_answer
-
-
-class PollsAssignedToUsers(models.Model):
+class PollsAssignedToUser(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     User = get_user_model()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None)
+    anonymous_user_id = models.CharField(max_length=255, null=True, blank=True, default=None)
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -87,3 +73,24 @@ class PollsAssignedToUsers(models.Model):
 
     def __str__(self):
         return str(self.poll) + ' assigned to ' + str(self.user)
+
+
+class UserAnswer(models.Model):
+    User = get_user_model()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    anonymous_user_id = models.CharField(max_length=255, null=True, blank=True, default=None)
+    question = models.ForeignKey(PollQuestion, on_delete=models.CASCADE)
+    choice_answer = models.ForeignKey(PollAnswer, on_delete=models.CASCADE, null=True, blank=True)
+    text_answer = models.TextField(blank=False)
+
+    class Meta:
+        # ordering = ('question_id',)
+        order_with_respect_to = 'question'
+        verbose_name = 'UserAnswer'
+        verbose_name_plural = 'UserAnswers'
+
+    def __str__(self):
+        if self.text_answer:
+            return str(self.text_answer)
+        else:
+            return str(self.choice_answer)

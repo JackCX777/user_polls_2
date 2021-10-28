@@ -1,51 +1,46 @@
-{% extends 'user_polls_2_app/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-  Home
+  Polls list
 {% endblock %}
 
-{% block page_name %}Home{% endblock page_name %}
+{% block page_name %}Polls list{% endblock page_name %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col">
-        <h2 class="text-center my-3">
-            User Polls 2
-        </h2>
-    </div>
-</div>
-
-{% if object_list %}
-    {% for object in object_list %}
-        <div class="row">
-            <div class="col">
-                <div class="text-center my-3">
-                    <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+    <div class="vstack col-sm mx-auto">
+        {% if object_list %}
+            {% for object in object_list %}
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="text-center my-3">
+                            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="text-center my-3">
+                        <h3>No Polls</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-{% else %}
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col">
-            <p>No Polls</p>
+            <div class="text-center my-3">
+                <a href="{% url 'poll_create' %}">
+                    <button type="button" class="btn btn-outline-secondary">Create new Poll</button>
+                </a>
+            </div>
         </div>
     </div>
-{% endif %}
-
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3">
-            <a href="{% url 'poll_create' %}">
-                <button type="button">Create new Poll</button>
-            </a>
-        </div>
-    </div>
-</div>
-
-
 
 {% endblock %}

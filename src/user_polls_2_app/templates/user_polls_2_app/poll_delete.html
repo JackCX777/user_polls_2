@@ -1,6 +1,7 @@
-{% extends 'user_polls_2_app/base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}
   Delete poll
@@ -10,23 +11,23 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="col">
-        <div class="text-center my-3 mx-5">
-            <div class="">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <p>
-                        Do you really want to delete poll {{ object.name }}?
-                    </p>
-                    <button type="submit">Yes</button>
-                    <a href="{% url 'poll_update' object.id %}">
-                        <button type="button">No</button>
-                    </a>
-                </form>
+    <div class="row">
+        <div class="col">
+            <div class="text-center my-3 mx-5">
+                <div class="">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <p>
+                            Do you really want to delete poll {{ object.name }}?
+                        </p>
+                        <button type="submit" class="btn btn-outline-secondary">Yes</button>
+                        <a href="{% url 'poll_update' object.id %}">
+                            <button type="button" class="btn btn-outline-secondary">No</button>
+                        </a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

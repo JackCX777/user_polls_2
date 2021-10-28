@@ -1,11 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy
-
 # from django.contrib.auth.models import AbstractBaseUser
 # from django.contrib.auth.models import PermissionsMixin
 # from django.utils import timezone
-
 from custom_user_app.managers import CustomUserManager
 
 
@@ -20,7 +18,9 @@ class User(AbstractUser):
         Specify that all objects for the User class are from CustomUserManager
     """
     username = None
-    email = models.EmailField(ugettext_lazy('email address'), unique=True)
+    last_name = None
+    contact = models.CharField(max_length=255, blank=True, help_text='Please share your contact')
+    email = models.EmailField(verbose_name=ugettext_lazy('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()

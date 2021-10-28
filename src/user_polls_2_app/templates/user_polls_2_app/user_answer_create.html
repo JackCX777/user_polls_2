@@ -4,10 +4,10 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  Create poll
+  Poll Detail
 {% endblock %}
 
-{% block page_name %}New poll{% endblock page_name %}
+{% block page_name %}Poll overview{% endblock page_name %}
 
 {% block content %}
 
@@ -16,16 +16,16 @@
             <div class="text-center my-3 mx-5">
                 <form action="" method="post" >
                     {% csrf_token %}
-                    {{ form | crispy }}
+                    {{ form }}
                     <button type="reset" class="btn btn-outline-secondary">Reset</button>
                     <button type="submit" class="btn btn-outline-secondary">Create</button>
                 </form>
                 <div class="row">
                     <div class="col">
                         <div class="text-center my-3">
-                            <a href="{% url 'polls_list' %}">
-                                <button type="button" class="btn btn-outline-secondary">Back to all polls</button>
-                            </a>
+<!--                            <a href="{% url 'polls_list' %}">-->
+<!--                                <button type="button" class="btn btn-outline-secondary">Back to all polls</button>-->
+<!--                            </a>-->
                         </div>
                     </div>
                 </div>

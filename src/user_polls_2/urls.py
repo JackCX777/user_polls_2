@@ -16,10 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
+from .yasg_urls import urlpatterns as doc_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    # path('', include('custom_user_app.urls')),
+    path('accounts/', include('custom_user_app.urls')),
     path('', include('user_polls_2_app.urls')),
+    path('api/v1/', include('user_polls_2_app.api_urls')),
 ]
+
+urlpatterns += doc_urls

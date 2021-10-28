@@ -4,33 +4,35 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-  Question Detail
+  Completed polls
 {% endblock %}
 
-{% block page_name %}Question: {{ object.text }}{% endblock page_name %}
+{% block page_name %}{{ object.name }}{% endblock page_name %}
 
 {% block content %}
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">
                             <h2 class="text-center my-3">
-                                Answer options:
+                                Completed polls:
                             </h2>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if answer_variants %}
-                        {% for variant in answer_variants %}
+                    {% if object_list %}
+                        {% for object in object_list %}
                             <tr>
                                 <td>
                                     <div class="mx-auto my-auto">
                                         <div class="mx-auto my-auto"></div>
-                                        <div class="text-center my-auto">{{ variant.text }}</div>
+                                        <div class="text-center my-auto">
+                                            <a href="{% url 'poll_results' pk=object.poll_id %}">{{ object.poll }}</a>
+                                        </div>
                                         <div class="mx-auto my-auto"></div>
                                     </div>
                                 </td>
@@ -41,7 +43,7 @@
                             <td>
                                 <div class="hstack gap-3">
                                     <div class="mx-auto my-auto"></div>
-                                    <div class="mx-auto my-auto">No answer options for this question</div>
+                                    <div class="mx-auto my-auto">You have no completed polls</div>
                                     <div class="mx-auto my-auto"></div>
                                 </div>
                             </td>
@@ -55,26 +57,8 @@
     <div class="row">
         <div class="col">
             <div class="text-center my-3">
-                <a href="{% url 'question_update' pk=pk q_id=q_id %}">
-                    <button type="button" class="btn btn-outline-secondary">Edit question</button>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                <a href="{% url 'question_delete' pk=pk q_id=q_id %}">
-                    <button type="button" class="btn btn-outline-secondary">Delete question</button>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="text-center my-3">
-                <a href="{% url 'poll_detail' pk=pk %}">
-                    <button type="button" class="btn btn-outline-secondary">Back to poll overview</button>
+                <a href="">
+                    <button type="button" class="btn btn-outline-secondary">Back to ..</button>
                 </a>
             </div>
         </div>

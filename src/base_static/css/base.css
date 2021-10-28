@@ -1,3 +1,72 @@
-body {
-    background: #343A40;
+html, body {
+    min-height: 100vh;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #ECEFF1;
+}
+
+.row {
+    justify-content: center;
+}
+
+.brand {
+    color: #fff;
+    background-color: #343A40;
+}
+
+.navbarg {
+    color: #fff;
+    background-color: #343A40;
+}
+
+.menu {
+    background-color: #343A40;
+}
+
+.search {
+    background-color: #343A40;
+}
+
+.cart-profile {
+    background-color: #343A40;
+}
+
+.container-sm {
+    flex: 1 0 auto;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header {
+    justify-content: center;
+    background-color: #ECEFF1;
+}
+
+.content {
+    flex: 1 0 auto;
+    justify-content: center;
+    background-color: #ECEFF1;
+}
+
+.pagination {
+    flex-shrink: 0;
+    justify-content: center;
+    background-color: #ECEFF1;
+}
+
+.footer {
+    flex-shrink: 0;
+    color: #fff;
+    background-color: #343A40;
+}
+
+.basement {
+    color: #fff;
+    background-color: #343A40;
+}
+
