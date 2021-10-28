@@ -17,8 +17,8 @@ from user_polls_2_app.views import (PollsListView,
 
 urlpatterns = [
     path('', PollsListView.as_view(), name='home'),
-    path('polls/', PollsListView.as_view(), name='polls_list'),
     path('polls/create/', CreatePollView.as_view(), name='poll_create'),
+    path('polls/', PollsListView.as_view(), name='polls_list'),
     path('poll/<int:pk>/', PollDetailView.as_view(), name='poll_detail'),
     path('poll/<int:pk>/update/', UpdatePollView.as_view(), name='poll_update'),
     path('poll/<int:pk>/delete/', DeletePollView.as_view(), name='poll_delete'),

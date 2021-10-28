@@ -25,12 +25,6 @@ class SessionRequiredMixin:
         return super().get(request, *args, **kwargs)
 
 
-class PollsListView(SessionRequiredMixin, ListView):
-    model = Poll
-    paginate_by = 5
-    template_name = 'user_polls_2_app/polls_list.html'
-
-
 class CreatePollView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, CreateView):
     permission_required = ('user_polls_2_app.add_poll',)
     queryset = Poll.objects.all()
@@ -55,6 +49,12 @@ class CreatePollView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessage
     def get_success_url(self):
         self.update_polls_assigned_to_users()
         return reverse('question_create', kwargs={'pk': self.object.id})
+
+
+class PollsListView(SessionRequiredMixin, ListView):
+    model = Poll
+    paginate_by = 5
+    template_name = 'user_polls_2_app/polls_list.html'
 
 
 class PollDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
