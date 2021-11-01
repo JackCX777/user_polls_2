@@ -136,4 +136,4 @@ dmypy.json
 scratch00.py
 
 # DB
-.postgresql/
+postgresql/
