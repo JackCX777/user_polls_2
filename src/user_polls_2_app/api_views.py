@@ -1,37 +1,131 @@
+from datetime import datetime
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.views import APIView
-from .models import Poll, PollQuestion, PollAnswer
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, permissions, renderers
+from .models import Poll, PollQuestion, PollAnswer, PollsAssignedToUser, UserAnswer
 from .serializers import (
     # PollCreateSerializer,
     # PollsListSerializer,
     # PollDetailSerializer,
     # PollUpdateSerializer,
-    PollsSerializer,
+    # PollsSerializer,
     PollSerializer,
-    QuestionAndOptionsCreateSerializer,
+    # QuestionAndOptionsCreateSerializer,
+    # QuestionsWithAnswersSerializer,
+    # QuestionsSerializer,
+    QuestionsListSerializer,
+    QuestionDetailSerializer,
+    PollRetrieveSerializer,
+    PollsAssignedToUserSerializer,
+    UserChoiceAnswerSerializer,
+    UserTextAnswerSerializer,
 )
-from .service import PaginationPolls
+from .services import PaginationPolls, AvailablePollsMixin
+from .mixins import MixedSerializer
 
 
-class PollsListCreateAPIView(generics.ListCreateAPIView):
-    """
-        Polls list and create generics.ListCreateAPIView)
-    """
-
-    queryset = Poll.objects.all()
-    serializer_class = PollsSerializer
-    pagination_class = PaginationPolls
-
-
-class PollsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-    """
-        Polls retrieve, update and destroy (generics.RetrieveUpdateDestroyAPIView)
-    """
+class PollViewSet(MixedSerializer, viewsets.ModelViewSet):
     queryset = Poll.objects.all()
     serializer_class = PollSerializer
+    serializer_classes_by_action = {
+        # 'list': QuestionsSerializer,
+        'retrieve': PollRetrieveSerializer
+    }
+    # pagination_class = PaginationPolls
 
+
+class QuestionViewSet(MixedSerializer, viewsets.ModelViewSet):
+    queryset = PollQuestion.objects.all()
+    serializer_class = QuestionDetailSerializer
+
+    # def get_serializer_class(self):
+    #     if self.action == 'list':
+    #         serializer_class = QuestionsSerializer
+    #     elif self.action == 'retrieve':
+    #         serializer_class = QuestionsWithAnswersSerializer
+    #     return serializer_class
+
+    # Using custom mixin instead if in get_serializer_class()
+    serializer_classes_by_action = {
+        'list': QuestionsListSerializer,
+        # 'retrieve': QuestionsWithAnswersSerializer
+    }
+
+
+class PollsAssignedToUserViewSet(MixedSerializer, AvailablePollsMixin, viewsets.ModelViewSet):
+    # queryset = PollsAssignedToUser.objects.filter()
+    serializer_class = PollsAssignedToUserSerializer
+    serializer_classes_by_action = {}
+    #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return self.get_personalised_polls()
+
+
+class UserAnswerViewSet(viewsets.ModelViewSet):
+    queryset = UserAnswer.objects.all()
+
+    def get_question(self):
+        return get_object_or_404(PollQuestion, id=self.kwargs.get('q_id'))
+
+    def get_serializer_class(self):
+        question = self.get_question()
+        if question.type == 3:
+            return UserTextAnswerSerializer
+        else:
+            return UserChoiceAnswerSerializer
+
+    def perform_create(self, serializer):
+        serializer.data.update({'question': self.get_question().id})
+        if self.request.user.is_authenticated:
+            serializer.data.update({'user': self.request.user, 'anonymous_user_id': None})
+        else:
+            serializer.data.update({'user': None, 'anonymous_user_id': self.request.session.session_key})
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class PollReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Poll.objects.all()
+#     serializer_class = PollSerializer
+
+
+# class PollAndQuestionViewSet(viewsets.ModelViewSet):
+#     def list(self, request, *args, **kwargs):
+#         queryset = Poll.objects.all()
+#         serializer = PollSerializer(queryset, many=True)
+#         return Response(serializer.data)
+#
+#     def create(self, request, *args, **kwargs):
+#         print(request.data)
+
+
+
+# class QuestionViewSet(viewsets.ViewSet):
+#     def list(self, request):
+#         queryset = PollQuestion.objects.all()
+#         serializer = QuestionsSerializer(queryset, many=True)
+#         return Response(serializer.data)
+#
+#     def retrieve(self, request, *args, **kwargs):
+#         queryset = PollQuestion.objects.all()
+#         question = get_object_or_404(queryset, pk=kwargs.get('pk'))
+#         serializer = QuestionsSerializer(question)
+#         return Response(serializer.data)
 
 
 # class CreateQuestionAndOptionsAPIView(generics.CreateAPIView):
@@ -52,6 +146,32 @@ class PollsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 # def perform_create(self, serializer):
     #    serializer.save(user=self.request.user)
+
+
+
+
+#####################
+
+# Using generics.ListCreateAPIView and generics.RetrieveUpdateDestroyAPIView
+
+
+# class PollsListCreateAPIView(generics.ListCreateAPIView):
+#     """
+#         Polls list and create (generics.ListCreateAPIView)
+#     """
+#
+#     queryset = Poll.objects.all()
+#     serializer_class = PollsSerializer
+#     pagination_class = PaginationPolls
+#
+#
+# class PollsRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+#     """
+#         Polls retrieve, update and destroy (generics.RetrieveUpdateDestroyAPIView)
+#     """
+#     queryset = Poll.objects.all()
+#     serializer_class = PollSerializer
+
 
 #####################
 

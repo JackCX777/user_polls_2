@@ -64,6 +64,7 @@ class PollsAssignedToUser(models.Model):
     User = get_user_model()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, default=None)
     anonymous_user_id = models.CharField(max_length=255, null=True, blank=True, default=None)
+    # anonymous_user_id = models.CharField(max_length=255, null=True, blank=True, default=None, related_name='anon_id')
     is_active = models.BooleanField(default=True)
     
     class Meta:
@@ -94,3 +95,10 @@ class UserAnswer(models.Model):
             return str(self.text_answer)
         else:
             return str(self.choice_answer)
+
+
+"""
+id user_id=null anonymous_user_id
+
+"""
+
